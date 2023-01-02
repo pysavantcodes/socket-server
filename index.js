@@ -19,6 +19,9 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cors());
 app.use(morgan('combined'));
 app.use(bodyParser.json());
+app.get('/', (req, res) => {
+    res.send("Hello");
+});
 
 const users = {};
 
