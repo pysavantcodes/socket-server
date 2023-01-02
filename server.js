@@ -2,8 +2,11 @@ const express = require("express");
 const http = require("http");
 const bodyParser = require("body-parser");
 const app = express();
+const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const server = http.createServer(app);
-require ("dotenv").config();
+require("dotenv").config();
 const path = require("path");
 
 const { Server } = require("socket.io");
@@ -11,15 +14,15 @@ const io = new Server({
     cors: true
 })
 
+app.use(helmet());
+app.use(express.urlencoded({ extended: false }))
+app.use(cors());
+app.use(morgan('combined'));
 app.use(bodyParser.json());
 
 const users = {};
 
 const socketToRoom = {};
-
-app.get('/', (req, res) => {
-    res.send("Hello");
-});
 
 io.on('connection', socket => {
     console.log("connected")
@@ -56,11 +59,11 @@ io.on('connection', socket => {
             room = room.filter(id => id !== socket.id);
             users[roomID] = room;
         }
-        socket.broadcast.emit('user left',socket.id)
+        socket.broadcast.emit('user left', socket.id)
     });
 
     socket.on('change', (payload) => {
-        socket.broadcast.emit('change',payload)
+        socket.broadcast.emit('change', payload)
     });
 
 });
