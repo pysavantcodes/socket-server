@@ -20,7 +20,7 @@ const server = app.listen(9000, () => {
 });
 const io = socket(server, {
     cors: {
-        origin: 'https://socket-server-ashen.vercel.app/',
+        origin: '*',
         credentials: true
     },transports : ['websocket']
 });
