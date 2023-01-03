@@ -21,8 +21,8 @@ const server = app.listen(9000, () => {
 const io = socket(server, {
     cors: {
         origin: '*',
-        
-    },transports : ['websocket']
+        methods: ['GET', 'POST']
+    },transports : ['polling']
 });
 
 
