@@ -22,7 +22,7 @@ const io = socket(server, {
     cors: {
         origin: '*',
         methods: ['GET', 'POST']
-    },transports : ['polling']
+    },transports: ['websocket', 'polling']
 });
 
 
