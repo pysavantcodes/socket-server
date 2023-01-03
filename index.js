@@ -20,9 +20,10 @@ const server = app.listen(9000, () => {
 });
 const io = socket(server, {
     cors: {
-        origin: '*',
-        methods: ['GET', 'POST']
-    },forceNew: true,transports: ['websocket', 'polling']
+         origin: "*",
+         credentials: true,
+         methods: ["GET", "POST"],
+    }
 });
 
 
