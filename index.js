@@ -5,14 +5,26 @@ const app = express();
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const server = http.createServer(app);
+// const server = http.createServer(app);
 require("dotenv").config();
 const path = require("path");
+const socket = require("socket.io")
+    // const { Server } = require("socket.io");
+    // const io = new Server({
+    //     cors: true
+    // })
 
-const { Server } = require("socket.io");
-const io = new Server({
-    cors: true
-})
+const server = app.listen(9000, () => {
+    console.log(`server is listening on port ${9000}`);
+    console.log(`http://localhost:${9000}`);
+});
+const io = socket(server, {
+    cors: {
+        origin: '*',
+        methods: ['GET', 'POST']
+    }
+});
+
 
 app.use(helmet());
 app.use(express.urlencoded({ extended: false }))
@@ -71,5 +83,7 @@ io.on('connection', socket => {
 
 });
 
-app.listen(9000, () => console.log("Running at port 8000"))
-io.listen(5000)
+
+
+// app.listen(9000, () => console.log("Running at port 8000"))
+// io.listen(9001)
